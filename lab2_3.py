@@ -1,3 +1,6 @@
+"""
+program that creates online map with location of user's friends
+"""
 import tweepy
 from flask import Flask, render_template, redirect, request, url_for
 import folium
@@ -5,6 +8,10 @@ from geopy.geocoders import Nominatim
 
 
 def authentification():
+    """
+    authentificates user's API
+    :return: nothing
+    """
     auth = tweepy.OAuthHandler('your key can be here :)',
                                'your key can be here :)')
     auth.set_access_token('your key can be here :)',
@@ -14,6 +21,11 @@ def authentification():
 
 
 def create_map(locations):
+    """
+    creates folium map
+    :param locations: coordinates of folium tags
+    :return: nothing
+    """
     geolocator = Nominatim(user_agent="geopy/1.11.0")
     new_locations = []
     for location in locations:
@@ -38,6 +50,11 @@ def create_map(locations):
 
 
 def getlocations(user_name):
+    """
+    gets locations using geopy
+    :param user_name: user_name
+    :return: nothing
+    """
     api = authentification()
     # name = input()
     #user_name = '@wlade_k'
@@ -47,15 +64,6 @@ def getlocations(user_name):
     for friend in friends:
         locations.append((friend.location, friend.screen_name))
     create_map(locations)
-
-
-def check_id(username):
-    api = authentification()
-    try:
-        user = api.get_user(username)
-        return True
-    except Exception:
-        return False
 
 
 app = Flask(__name__)
@@ -79,5 +87,3 @@ def first_page():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-

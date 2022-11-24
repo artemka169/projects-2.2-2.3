@@ -1,4 +1,4 @@
-# projects-2.2-2.3
+# Mapping user's geolocation with Twitter API
 
 Project 2.3
 
